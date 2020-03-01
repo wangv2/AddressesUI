@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Welcome to the Address API</title>
+</head>
+
+<body>
+
+  <h1><center>Welcome to the Address API</center></h1>
+
+<p>
+  Select Country: 
+  <select name=countries>
+    {% for keys in data.keys() %}
+    <option value= "{{country}}">{{ keys }}</option>
+    {{ val }}
+    {% endfor %}
+    
+  </select> 
+</p>
+
+<p>
+  Select action:  
+  <button onclick="" type="button">Search by country</button>
+  <button type="button">Search across country</button>
+  <button type="button">Add address</button>
+</p>
+
+</body>
+</html>

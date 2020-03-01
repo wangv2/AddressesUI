@@ -1,0 +1,40 @@
+{
+    "line1": {
+        "required": true, 
+        "type": "form",
+        "name": "Line 1", 
+        "field": "line1"
+    },
+    "city": {
+        "required": true, 
+        "type": "form",
+        "name": "City", 
+        "field": "city"
+    },
+    "region": {
+        "required": true, 
+        "type": "form",
+        "name": "Region", 
+        "field": "region"
+    },
+    "postalCode": {
+        "required": true, 
+        "type": "form",
+        "name": "Postal Code", 
+        "field": "postalCode"
+    },
+    "country": {
+        "required": true, 
+        "type": "form",
+        "name": "Country", 
+        "field": "country"
+    },
+    "other": {
+        "required": true, 
+        "type": "form",
+        "name": "Other", 
+        "field": "other"
+    },
+    "_id":"general",
+    "order": ["line1", "city", "region", "postalCode", "country", "other"]
+}

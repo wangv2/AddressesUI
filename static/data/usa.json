@@ -1,0 +1,42 @@
+{
+    "line1": {
+        "required": true, 
+        "type": "form",
+        "name": "Line 1", 
+        "field": "line1"
+    },
+    "city": {
+        "required": true, 
+        "type": "form",
+        "name": "City", 
+        "field": "city"
+    },
+    "region": {
+        "required": true, 
+        "type": "dropdown",
+        "contents": ["AK", "AL", "AZ"],
+        "name": "State", 
+        "field": "region"
+    },
+    "postalCode": {
+        "required": true, 
+        "type": "form",
+        "name": "ZIP", 
+        "field": "postalCode"
+    },
+    "country": {
+        "required": true, 
+        "type": "form",
+        "name": "Country", 
+        "field": "country"
+    },
+    "other": {
+        "required": false, 
+        "type": "form",
+        "name": "Other", 
+        "field": "other"
+    },
+    "_id":"usa",
+    "order": ["line1", "city", "region", "postalCode", "country", "other"]
+}
+    

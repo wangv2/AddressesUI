@@ -1,0 +1,22 @@
+{
+    "general": [
+        {
+            "line1": {
+                "required": true
+            },
+            "city": {
+                "required": true
+            }
+        }
+    ], 
+    "USA": [
+        {
+            "line1": {
+            "required": true
+            },
+            "city": {
+                "required": true
+            }
+        }
+    ]
+}
