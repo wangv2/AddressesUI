@@ -25,10 +25,24 @@
   <button type="button">Add address</button>
 </p>
 
-</body>
-
 <p>
   {{data["formats"]}}
 </p>
 
+
+
+<form name="add" action="/add" method="POST">
+
+  Select Country:
+<select name="country">
+  {% for keys in data["formats"] %}
+    <option value='{{ keys["_id"] }}'>{{ keys["_id"] }}</option>
+  {% endfor %}
+</select>
+
+  <input type="submit" value="Add Address">
+
+</form>
+
+</body>
 </html>

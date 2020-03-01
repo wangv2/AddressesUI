@@ -1,6 +1,6 @@
 import os
 import requests
-from flask import Flask, render_template, json, jsonify
+from flask import Flask, render_template, json, jsonify, request
 
 app = Flask(__name__)
 
@@ -20,10 +20,13 @@ def search():
     # return json.dumps(data)
     print(':)') # just needed a placeholder to get it to build :)
 
-@app.route('/add')
+@app.route('/add', methods=['POST'])
 def add():
-    response = requests.post("http://localhost:5000/add").content
-    return response
+    # response = requests.post("http://localhost:5000/add").content
+    # return response
+    country = request.form['country']
+    print(str(country))
+    return render_template("add.html", data=country)
 
 
 def formats():
