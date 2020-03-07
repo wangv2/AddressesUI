@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template("index.html", data=json.loads(formats()))
+    return render_template("index.html", data=json.loads(get_format_ids()))
 
 @app.route('/test')
 def test():
@@ -25,12 +25,17 @@ def add():
     # response = requests.post("http://localhost:5000/add").content
     # return response
     country = request.form['country']
-    print(str(country))
-    return render_template("add.html", data=country)
+    return render_template("add.html", data=json.loads(get_format_by_id(country)))
 
 
-def formats():
-    response = requests.get("http://localhost:5000/api/formats").content
+def get_format_by_id(country):
+    url = "http://localhost:5000/api/formatIds/" + country
+    response = requests.get(url).content
+    return response
+
+
+def get_format_ids():
+    response = requests.get("http://localhost:5000/api/formatIds").content
     return response
 
 

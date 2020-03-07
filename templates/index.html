@@ -10,15 +10,6 @@
   <h1><center>Welcome to the Address API</center></h1>
 
 <p>
-  Select Country:
-  <select name=countries>
-    {% for keys in data["formats"] %}
-      <option>{{ keys["_id"] }}</option>
-    {% endfor %}
-  </select>
-</p>
-
-<p>
   Select action:
   <button onclick="" type="button">Search by country</button>
   <button type="button">Search across country</button>
@@ -34,15 +25,20 @@
 <form name="add" action="/add" method="POST">
 
   Select Country:
-<select name="country">
-  {% for keys in data["formats"] %}
-    <option value='{{ keys["_id"] }}'>{{ keys["_id"] }}</option>
-  {% endfor %}
-</select>
+  <select name="country">
+    {% for id in data["formatIds"] %}
+      <!-- TODO: add this validation to web api - ID.replace ('-', ' ') -->
+      <!-- TODO: don't print "GENERAL"  key -->
+      <option value='{{ id }}'>{{ id }}</option>
+    {% endfor %}
+  </select>
+
+  <input type="text" value="{{ data }}" hidden=true name="formats">
 
   <input type="submit" value="Add Address">
 
 </form>
 
 </body>
+
 </html>
