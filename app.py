@@ -30,14 +30,25 @@ def addForm():
 @app.route('/add', methods=['POST'])
 def add():
     addInput = request.form.to_dict()
-    # for x, y in addInput.items():
-    #     print(x, y)
-    # return render_template("addResults.html")
-    return render_template("addResults.html", data=json.loads(api_add(addInput)))
+    url = "http://localhost:5000/api/add"
+    headers = {'Content-type': 'application/json'}
+    response = json.loads(requests.post(url, json=addInput, headers=headers).content.decode("utf-8"))
+    print(type(response))
+    return render_template("addResults.html", data=response)
 
+    # working
+    # addInput = request.form.to_dict()
+    # url = "http://localhost:5000/api/add"
+    # headers = {'Content-type': 'application/json'}
+    # response = requests.post(url, json=addInput, headers=headers)
+    # return render_template("addResults.html", data=response)
+
+
+# broken - added inside add() function and it works  ¯\_(ツ)_/¯
 def api_add(addInput):
     url = "http://localhost:5000/api/add"
-    response = requests.get(url).content
+    headers = {'Content-type': 'application/json'}
+    response = requests.post(url, json=addInput, headers=headers)
     return response
 
 
