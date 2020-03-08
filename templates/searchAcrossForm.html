@@ -1,6 +1,6 @@
-<h1>Add Address</h1>
+<h1>Search across country</h1>
 
-<form name="addInput" action="/add" method="POST">
+<form name="searchAcross" action="/search" method="POST">
 
     {% for field in data['order'] %}
 
@@ -9,8 +9,8 @@
 
         <!-- User cannot change country value -->
         {% elif field == "country" %}
-            Country: {{ data['_id'] }}
-            <input type="hidden" name="country" value="{{ data['_id'] }}">
+            <!-- Country: {{ data['_id'] }}
+            <input type="hidden" name="country" value="{{ data['_id'] }}"> -->
 
         {% else %}
             {% if data[field]['required'] != 'False' %}
@@ -19,12 +19,12 @@
 
                 <!-- attribute type: text -->
                 {% if data[field]['type'] == 'text' %}
-                    <input type = "text" name = "{{ data[field]['field'] }}" required/>
+                    <input type = "text" name = "{{ data[field]['field'] }}"/>
                 {% endif %}
                 
                 <!-- attribute type: select -->
                 {% if data[field]['type'] == 'select' %}
-                    <select id="region" name="{{ data[field]['field'] }}" required>
+                    <select id="region" name="{{ data[field]['field'] }}">
                         {% for item in data[field]['contents'] %}
                             <option value="{{ item }}">{{ item }}</option>
                         {% endfor %}
@@ -33,7 +33,7 @@
 
                 <!-- attribute type: number -->
                 {% if data[field]['type'] == 'number' %}
-                    <input type = "number" name = "{{ data[field]['field'] }}" required/>
+                    <input type = "number" name = "{{ data[field]['field'] }}"/>
                 {% endif %}
 
             {% endif %}

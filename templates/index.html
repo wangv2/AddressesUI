@@ -9,15 +9,17 @@
 
   <h1><center>Welcome to the Address API</center></h1>
 
+  <!-- ADD ADDRESS -->
   <div id='operation'> 
     <form name="addForm" action="/addForm" method="POST">
     <h3>Add Address</h3>
       Select Country:
       <select name="country">
-        {% for id in data["formatIds"] %}
-          <!-- TODO: add this validation to web api - ID.replace ('-', ' ') -->
-          <!-- TODO: don't print "GENERAL"  key -->
-          <option value='{{ id }}'>{{ id }}</option>
+        {% for id in data %}
+          {% if id != 'GENERAL' %} 
+            <!-- TODO: add this validation to web api - ID.replace ('-', ' ') -->
+            <option value='{{ id }}'>{{ id }}</option>
+          {% endif %}
         {% endfor %}
       </select>
 
@@ -28,6 +30,36 @@
     </form>
   </div>
 
+  <!-- SEARCH BY COUNTRY-->
+  <div id='operation'> 
+    <form name="searchByForm" action="/searchByForm" method="POST">
+    <h3>Search by country</h3>
+      Select Country:
+      <select name="country">
+        {% for id in data %}
+          {% if id != 'GENERAL' %} 
+            <!-- TODO: add this validation to web api - ID.replace ('-', ' ') -->
+            <option value='{{ id }}'>{{ id }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+
+      <input type="text" value="{{ data }}" hidden=true name="formats">
+
+      <input type="submit" value="Search by Country">
+
+    </form>
+  </div>
+
+  <!-- SEARCH ACROSS COUNTRY-->
+  <div id='operation'> 
+    <form name="searchAcrossForm" action="/searchAcrossForm" method="POST">
+    <h3>Search across country</h3>
+
+      <input type="submit" value="Search across Country">
+
+    </form>
+  </div>
 
 </body>
 

@@ -15,51 +15,51 @@ def test():
 
 @app.route('/search')
 def search():
-    # response = requests.post("http://localhost:5000/search").content
-    # return response
-    # return json.dumps(data)
-    print(':)') # just needed a placeholder to get it to build :)
+    print("IN SEARCH")
+    return render_template("searchResults.html")
 
 @app.route('/addForm', methods=['POST'])
 def addForm():
-    # response = requests.post("http://localhost:5000/add").content
-    # return response
     country = request.form['country']
     return render_template("addForm.html", data=json.loads(api_get_format_by_id(country)))
+
+@app.route('/searchByForm', methods=['POST'])
+def searchByForm():
+    country = request.form['country']
+    return render_template("searchByForm.html", data=json.loads(api_get_format_by_id(country)))
+
+@app.route('/searchAcrossForm', methods=['POST'])
+def searchAcrossForm():
+    country = 'GENERAL'
+    return render_template("searchAcrossForm.html", data=json.loads(api_get_format_by_id(country)))
 
 @app.route('/add', methods=['POST'])
 def add():
     addInput = request.form.to_dict()
+    print(addInput)
     url = "http://localhost:5000/api/add"
     headers = {'Content-type': 'application/json'}
     response = json.loads(requests.post(url, json=addInput, headers=headers).content.decode("utf-8"))
-    print(type(response))
+    print(response)
     return render_template("addResults.html", data=response)
 
-    # working
-    # addInput = request.form.to_dict()
-    # url = "http://localhost:5000/api/add"
-    # headers = {'Content-type': 'application/json'}
-    # response = requests.post(url, json=addInput, headers=headers)
-    # return render_template("addResults.html", data=response)
-
-
 # broken - added inside add() function and it works  ¯\_(ツ)_/¯
-def api_add(addInput):
-    url = "http://localhost:5000/api/add"
-    headers = {'Content-type': 'application/json'}
-    response = requests.post(url, json=addInput, headers=headers)
-    return response
+# def api_add(addInput):
+#     url = "http://localhost:5000/api/add"
+#     headers = {'Content-type': 'application/json'}
+#     response = requests.post(url, json=addInput, headers=headers)
+#     return response
 
 
 def api_get_format_by_id(country):
-    url = "http://localhost:5000/api/formatIds/" + country
+    url = "http://localhost:5000/api/formats/" + country
     response = requests.get(url).content
     return response
 
 
 def get_format_ids():
     response = requests.get("http://localhost:5000/api/formatIds").content
+    print(response)
     return response
 
 
