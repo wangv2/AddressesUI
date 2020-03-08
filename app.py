@@ -13,11 +13,6 @@ def test():
     response = requests.get("http://localhost:5000/api").content
     return response
 
-@app.route('/search')
-def search():
-    print("IN SEARCH")
-    return render_template("searchResults.html")
-
 @app.route('/addForm', methods=['POST'])
 def addForm():
     country = request.form['country']
@@ -36,12 +31,21 @@ def searchAcrossForm():
 @app.route('/add', methods=['POST'])
 def add():
     addInput = request.form.to_dict()
-    print(addInput)
     url = "http://localhost:5000/api/add"
     headers = {'Content-type': 'application/json'}
     response = json.loads(requests.post(url, json=addInput, headers=headers).content.decode("utf-8"))
     print(response)
     return render_template("addResults.html", data=response)
+
+@app.route('/search', methods=['POST'])
+def search():
+    searchInput = request.form.to_dict()
+    searchInput = remove_empty_filters(searchInput)
+    url = "http://localhost:5000/api/search"
+    headers = {'Content-type': 'application/json'}
+    response = json.loads(requests.post(url, json=searchInput, headers=headers).content.decode("utf-8"))
+    print(response)
+    return render_template("searchResults.html", data=response)
 
 # broken - added inside add() function and it works  ¯\_(ツ)_/¯
 # def api_add(addInput):
@@ -50,6 +54,11 @@ def add():
 #     response = requests.post(url, json=addInput, headers=headers)
 #     return response
 
+def remove_empty_filters(filters): 
+    for key in list(filters): 
+        if filters.get(key) == "":
+            del filters[key]
+    return filters
 
 def api_get_format_by_id(country):
     url = "http://localhost:5000/api/formats/" + country

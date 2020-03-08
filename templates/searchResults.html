@@ -7,15 +7,18 @@
 
 <body>
 
-  <h1>Search results</h1>
-    sup
-  <!-- {% for key, value in data.items() %}
-    {% print(key) %}
-    {% print(": ") %}
-    {% print(value) %}
-    <br>
-  {% endfor %} -->
-
+    <h1>Search results</h1>
+        {% for match in data %}
+            {% for key, value in match.items() %}
+                {% if key != "_id" %}
+                    {% print(key) %}
+                    {% print(": ") %}
+                    {% print(value) %}
+                    <br>
+                {% endif %}
+            {% endfor %}
+            <br>
+        {% endfor %}
 </body>
 
 </html>
