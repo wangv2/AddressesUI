@@ -1,0 +1,40 @@
+<h1>Add Address</h1>
+
+<form name="addInput" action="/add" method="POST">
+
+    {% for field in data['order'] %}
+
+        {% if field == "\n" %}
+            <br>
+
+        {% else %}
+            <!-- change this to enforce requirement in html instead of if statement -->
+            {% if data[field]['required'] != 'False' %}
+                
+                {{ data[field]['name'] }}: 
+
+                <!-- attribute type: text -->
+                {% if data[field]['type'] == 'text' %}
+                    <input type = "text" name = "{{ data[field]['field'] }}" />
+                {% endif %}
+                
+                <!-- attribute type: select -->
+                {% if data[field]['type'] == 'select' %}
+                    <select id="region" name="{{ data[field]['field'] }}">
+                        {% for item in data[field]['contents'] %}
+                            <option value="{{ item }}">{{ item }}</option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
+
+                <!-- attribute type: number -->
+                {% if data[field]['type'] == 'number' %}
+                    <input type = "number" name = "{{ data[field]['field'] }}" />
+                {% endif %}
+
+            {% endif %}
+        {% endif %}
+    {% endfor %} 
+    <input type="submit" value="Submit">
+
+</form>

@@ -20,15 +20,28 @@ def search():
     # return json.dumps(data)
     print(':)') # just needed a placeholder to get it to build :)
 
-@app.route('/add', methods=['POST'])
-def add():
+@app.route('/addForm', methods=['POST'])
+def addForm():
     # response = requests.post("http://localhost:5000/add").content
     # return response
     country = request.form['country']
-    return render_template("add.html", data=json.loads(get_format_by_id(country)))
+    return render_template("addForm.html", data=json.loads(api_get_format_by_id(country)))
+
+@app.route('/add', methods=['POST'])
+def add():
+    addInput = request.form.to_dict()
+    # for x, y in addInput.items():
+    #     print(x, y)
+    # return render_template("addResults.html")
+    return render_template("addResults.html", data=json.loads(api_add(addInput)))
+
+def api_add(addInput):
+    url = "http://localhost:5000/api/add"
+    response = requests.get(url).content
+    return response
 
 
-def get_format_by_id(country):
+def api_get_format_by_id(country):
     url = "http://localhost:5000/api/formatIds/" + country
     response = requests.get(url).content
     return response
