@@ -6,77 +6,72 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    try: 
-        return render_template("index.html", data=json.loads(get_format_ids()))
-    except Exception as e:
-        return render_template("error.html", error = str(e))
+    return render_template("index.html", data=json.loads(get_format_ids()))
     
 @app.route('/test')
 def test():
-    try: 
-        response = requests.get("http://localhost:5000/api").content
-        return response
-    except Exception as e:
-        return render_template("error.html", error = str(e))
+    response = requests.get("http://localhost:5000/api").content
+    return response
 
 @app.route('/addForm', methods=['POST'])
 def addForm():
-    try: 
-        country = request.form['country']
-        return render_template("addForm.html", data=json.loads(api_get_format_by_id(country)))
-    except Exception as e:
-        return render_template("error.html", error = str(e))
+    country = request.form['country']
+    return render_template("addForm.html", data=json.loads(api_get_format_by_id(country)))
 
 @app.route('/searchByForm', methods=['POST'])
 def searchByForm():
-    try: 
-        country = request.form['country']
-        return render_template("searchByForm.html", data=json.loads(api_get_format_by_id(country)))
-    except Exception as e:
-        return render_template("error.html", error = str(e))
+    country = request.form['country']
+    return render_template("searchByForm.html", data=json.loads(api_get_format_by_id(country)))
 
 @app.route('/searchAcrossForm', methods=['POST'])
 def searchAcrossForm():
-    try: 
-        country = 'GENERAL'
-        return render_template("searchAcrossForm.html", data=json.loads(api_get_format_by_id(country)))
-    except Exception as e:
-        return render_template("error.html", error = str(e))
+    country = 'GENERAL'
+    return render_template("searchAcrossForm.html", data=json.loads(api_get_format_by_id(country)))
 
 @app.route('/add', methods=['POST'])
 def add():
-    try: 
-        addInput = request.form.to_dict()
 
-        if 'line1' not in addInput:
-            addInput['line1'] = ""
-        if 'city' not in addInput:
-            addInput['city'] = ""
-        if 'region' not in addInput:
-            addInput['region'] = ""
-        if 'postalCode' not in addInput:
-            addInput['postalCode'] = ""
-        if 'other' not in addInput:
-            addInput['other'] = ""
+    addInput = request.form.to_dict()
 
-        url = "http://localhost:5000/api/add"
-        headers = {'Content-type': 'application/json'}
-        response = json.loads(requests.post(url, json=addInput, headers=headers).content.decode("utf-8"))
-        return render_template("addResults.html", data=response)
-    except Exception as e:
-        return render_template("error.html", error = str(e))
+    if 'line1' not in addInput:
+        addInput['line1'] = ""
+    if 'city' not in addInput:
+        addInput['city'] = ""
+    if 'region' not in addInput:
+        addInput['region'] = ""
+    if 'postalCode' not in addInput:
+        addInput['postalCode'] = ""
+    if 'other' not in addInput:
+        addInput['other'] = ""
+
+    url = "http://localhost:5000/api/add"
+    headers = {'Content-type': 'application/json'}
+    response = requests.post(url, json=addInput, headers=headers)
+    response_content = response.content.decode("utf-8")
+    response_status = response.status_code
+
+    if response_status == 200: 
+        return render_template("addResults.html", data=json.loads(response_content))
+    else: 
+        error_message = "ERROR: " + str(response_status) + " - " + response_content
+        return render_template("error.html", data=error_message)
 
 @app.route('/search', methods=['POST'])
 def search():
-    try: 
-        searchInput = request.form.to_dict()
-        searchInput = remove_empty_filters(searchInput)
-        url = "http://localhost:5000/api/search"
-        headers = {'Content-type': 'application/json'}
-        response = json.loads(requests.post(url, json=searchInput, headers=headers).content.decode("utf-8"))
-        return render_template("searchResults.html", data=response)
-    except Exception as e:
-        return render_template("error.html", error = str(e))
+    searchInput = request.form.to_dict()
+    searchInput = remove_empty_filters(searchInput)
+
+    url = "http://localhost:5000/api/search"
+    headers = {'Content-type': 'application/json'}
+    response = requests.post(url, json=searchInput, headers=headers)
+    response_content = response.content.decode("utf-8")
+    response_status = response.status_code
+
+    if response_status == 200: 
+        return render_template("searchResults.html", data=json.loads(response_content))
+    else: 
+        error_message = "ERROR: " + str(response_status) + " - " + response_content
+        return render_template("error.html", data=error_message)
     
 # broken - added inside add() function and it works  ¯\_(ツ)_/¯
 # def api_add(addInput):
