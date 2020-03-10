@@ -31,6 +31,18 @@ def searchAcrossForm():
 @app.route('/add', methods=['POST'])
 def add():
     addInput = request.form.to_dict()
+
+    if 'line1' not in addInput:
+        addInput['line1'] = ""
+    if 'city' not in addInput:
+        addInput['city'] = ""
+    if 'region' not in addInput:
+        addInput['region'] = ""
+    if 'postalCode' not in addInput:
+        addInput['postalCode'] = ""
+    if 'other' not in addInput:
+        addInput['other'] = ""
+
     url = "http://localhost:5000/api/add"
     headers = {'Content-type': 'application/json'}
     response = json.loads(requests.post(url, json=addInput, headers=headers).content.decode("utf-8"))
@@ -54,8 +66,8 @@ def search():
 #     response = requests.post(url, json=addInput, headers=headers)
 #     return response
 
-def remove_empty_filters(filters): 
-    for key in list(filters): 
+def remove_empty_filters(filters):
+    for key in list(filters):
         if filters.get(key) == "":
             del filters[key]
     return filters

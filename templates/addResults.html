@@ -10,10 +10,12 @@
   <h1>Add results</h1>
 
   {% for key, value in data.items() %}
-    {% print(key) %}
-    {% print(": ") %}
-    {% print(value) %}
-    <br>
+    {% if value != "" %}
+      {% print(key) %}
+      {% print(": ") %}
+      {% print(value) %}
+      <br>
+    {% endif %}
   {% endfor %}
 
 </body>
