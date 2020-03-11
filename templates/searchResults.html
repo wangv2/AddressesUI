@@ -10,7 +10,7 @@
     <h1>Search results</h1>
         {% for match in data %}
             {% for key, value in match.items() %}
-                {% if key != "_id" %}
+                {% if key != "_id" and value != "" %}
                     {% print(key) %}
                     {% print(": ") %}
                     {% print(value) %}
